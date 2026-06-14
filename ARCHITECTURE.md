@@ -69,7 +69,7 @@ revisit only if a concrete need outgrows the above.
 ## Module map
 | Area | Path | Notes |
 |---|---|---|
-| Seed / world create | `TODO` | + starter-pack pre-generation |
+| Seed / world create | [`src/lib/generation/`](src/lib/generation/) | world setup + starter-pack pre-generation |
 | Article page (SSR + stream) | `TODO` | the core loop (route) |
 | Generation loop | [`src/lib/generation/`](src/lib/generation/) | build → stream → parse `[[links]]` → atomic write (page + edges) |
 | Prompt build + LLM client | [`src/lib/llm/`](src/lib/llm/) | the moat — L2/L3 prompt builder + OpenRouter streaming client |
