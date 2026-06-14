@@ -41,9 +41,10 @@ empty shell → redirect to the world's home article.
   routinely exceeds the context window.
 
 ## Data model
-- `worlds` — `id`, `seed`, `canon_facts` (capped list), `visibility`, `created_at`
-- `pages`  — `world_id`, `slug`, `title`, `body`, `status`, `created_at`
-- `links`  — `world_id`, `src_slug`, `dst_slug`, `anchor`, `context_hint`
+Defined in [`src/db/schema.ts`](src/db/schema.ts) (Drizzle); SQL migrations in `drizzle/`.
+- `worlds` — `id` (short, shareable), `seed`, `title`, `canon_facts` (capped list — the L3 bible), `visibility`, `created_at`
+- `pages`  — PK `(world_id, slug)`; `title`, `body`, `status`, `created_at` — the **L1** immutable cache
+- `links`  — PK `(world_id, src_slug, dst_slug)`; `anchor`, `context_hint` — the **L2** link graph. `dst_slug` has no FK: it may point at an as-yet-ungenerated page (a "blue link")
 
 ## Caching & cost controls (see SPEC §4)
 - Every page cached permanently and immutably → reads are ~free, served from edge/CDN.
@@ -71,5 +72,5 @@ revisit only if a concrete need outgrows the above.
 | Seed / world create | `TODO` | + starter-pack pre-generation |
 | Article page (SSR + stream) | `TODO` | the core loop |
 | Prompt build (L2 + L3) | `TODO` | the moat |
-| Cache / persistence | `TODO` | L1 |
+| Data model + DB client | [`src/db/`](src/db/) | L1 store (`pages`) + L2 graph (`links`); migrations in `drizzle/` |
 | Rate limit / spend cap | `TODO` | survival |
