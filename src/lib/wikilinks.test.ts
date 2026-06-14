@@ -1,0 +1,46 @@
+import { describe, it, expect } from "vitest";
+import { parseWikiLinks, uniqueLinkEdges } from "./wikilinks";
+
+describe("parseWikiLinks", () => {
+  it("parses a simple [[link]]", () => {
+    const [link] = parseWikiLinks("See the [[Drowned Archive]] for more.");
+    expect(link).toMatchObject({
+      target: "Drowned Archive",
+      anchor: "Drowned Archive",
+      slug: "drowned-archive",
+    });
+  });
+
+  it("parses [[target|anchor]] with a custom anchor", () => {
+    const [link] = parseWikiLinks("the [[Drowned Archive|archive]] sank");
+    expect(link).toMatchObject({
+      target: "Drowned Archive",
+      anchor: "archive",
+      slug: "drowned-archive",
+    });
+  });
+
+  it("extracts multiple links in document order", () => {
+    const links = parseWikiLinks("[[A]] then [[B]] then [[C]]");
+    expect(links.map((l) => l.target)).toEqual(["A", "B", "C"]);
+  });
+
+  it("ignores empty or whitespace-only brackets", () => {
+    expect(parseWikiLinks("[[]] and [[ ]]")).toEqual([]);
+  });
+
+  it("trims whitespace inside the brackets", () => {
+    const [link] = parseWikiLinks("[[  The Spire  |  the spire  ]]");
+    expect(link).toMatchObject({ target: "The Spire", anchor: "the spire" });
+  });
+});
+
+describe("uniqueLinkEdges", () => {
+  it("collapses duplicate targets to one edge, keeping the first anchor", () => {
+    const edges = uniqueLinkEdges(
+      parseWikiLinks("[[Spire]], later [[Spire|the spire]] again"),
+    );
+    expect(edges).toHaveLength(1);
+    expect(edges[0]).toMatchObject({ slug: "spire", anchor: "Spire" });
+  });
+});
