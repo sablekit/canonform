@@ -1,0 +1,72 @@
+# Continuous Integration
+#
+# Skeleton CI. While the app has not been scaffolded yet (no package.json),
+# every step is skipped and the job passes green — so the README CI badge is
+# never red. Once `package.json` (and a committed lockfile) land, this runs the
+# real pipeline: lint → typecheck → test → build.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Least-privilege: this workflow only needs to read the repo.
+permissions:
+  contents: read
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect Node project
+        id: detect
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "No package.json yet — skipping build steps."
+          fi
+
+      - name: Set up Node.js
+        if: steps.detect.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Reproducible install from the committed lockfile (best practice over `npm install`).
+      - name: Install dependencies
+        if: steps.detect.outputs.ready == 'true'
+        run: npm ci
+
+      # `--if-present` lets the pipeline grow incrementally: a script that does
+      # not exist yet is skipped instead of failing the run.
+      - name: Lint
+        if: steps.detect.outputs.ready == 'true'
+        run: npm run lint --if-present
+
+      - name: Typecheck
+        if: steps.detect.outputs.ready == 'true'
+        run: npm run typecheck --if-present
+
+      - name: Test
+        if: steps.detect.outputs.ready == 'true'
+        run: npm test --if-present
+
+      - name: Build
+        if: steps.detect.outputs.ready == 'true'
+        run: npm run build --if-present
