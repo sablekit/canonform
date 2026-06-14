@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { slugify } from "./slug";
+import { slugify, titleFromSlug } from "./slug";
 
 describe("slugify", () => {
   it("lowercases and hyphenates spaces", () => {
@@ -25,5 +25,19 @@ describe("slugify", () => {
 
   it("bounds slug length", () => {
     expect(slugify("a".repeat(200)).length).toBeLessThanOrEqual(120);
+  });
+});
+
+describe("titleFromSlug", () => {
+  it("title-cases a hyphenated slug", () => {
+    expect(titleFromSlug("the-long-tide")).toBe("The Long Tide");
+  });
+
+  it("keeps non-Latin characters", () => {
+    expect(titleFromSlug("龙之城-传说")).toBe("龙之城 传说");
+  });
+
+  it("returns 'Untitled' for an empty slug", () => {
+    expect(titleFromSlug("")).toBe("Untitled");
   });
 });

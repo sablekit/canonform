@@ -20,6 +20,9 @@ dist/
 # vercel
 .vercel
 
+# claude code local tooling (preview launch config, etc.)
+.claude/
+
 # misc
 *.log
 npm-debug.log*
