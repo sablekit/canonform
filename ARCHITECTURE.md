@@ -71,6 +71,6 @@ revisit only if a concrete need outgrows the above.
 |---|---|---|
 | Seed / world create | `TODO` | + starter-pack pre-generation |
 | Article page (SSR + stream) | `TODO` | the core loop |
-| Prompt build (L2 + L3) | `TODO` | the moat |
+| Prompt build + LLM client | [`src/lib/llm/`](src/lib/llm/) | the moat — L2/L3 prompt builder + OpenRouter streaming client |
 | Data model + DB client | [`src/db/`](src/db/) | L1 store (`pages`) + L2 graph (`links`); migrations in `drizzle/` |
 | Rate limit / spend cap | `TODO` | survival |
