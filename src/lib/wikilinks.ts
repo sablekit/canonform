@@ -47,3 +47,17 @@ export function uniqueLinkEdges(links: WikiLink[]): WikiLink[] {
   }
   return [...seen.values()];
 }
+
+/**
+ * Rewrite [[Target]] / [[Target|anchor]] into ordinary Markdown links pointing at the
+ * target's page within a world, so a normal Markdown renderer turns them into clickable
+ * links. Link text is the anchor (or the target); href is /w/{worldId}/{slug}.
+ */
+export function linkifyWikilinks(markdown: string, worldId: string): string {
+  return markdown.replace(WIKILINK_RE, (raw, target: string, anchor?: string) => {
+    const trimmedTarget = target.trim();
+    if (!trimmedTarget) return raw; // leave empty/whitespace-only brackets untouched
+    const text = (anchor ?? target).trim();
+    return `[${text}](/w/${worldId}/${slugify(trimmedTarget)})`;
+  });
+}

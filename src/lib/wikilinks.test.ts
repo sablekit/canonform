@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseWikiLinks, uniqueLinkEdges } from "./wikilinks";
+import { parseWikiLinks, uniqueLinkEdges, linkifyWikilinks } from "./wikilinks";
 
 describe("parseWikiLinks", () => {
   it("parses a simple [[link]]", () => {
@@ -42,5 +42,25 @@ describe("uniqueLinkEdges", () => {
     );
     expect(edges).toHaveLength(1);
     expect(edges[0]).toMatchObject({ slug: "spire", anchor: "Spire" });
+  });
+});
+
+describe("linkifyWikilinks", () => {
+  it("rewrites [[Target]] into a markdown link to the world page", () => {
+    expect(linkifyWikilinks("See [[The Long Tide]].", "w1")).toBe(
+      "See [The Long Tide](/w/w1/the-long-tide).",
+    );
+  });
+
+  it("uses the anchor text for [[Target|anchor]]", () => {
+    expect(linkifyWikilinks("the [[The Long Tide|tide]] rose", "w1")).toBe(
+      "the [tide](/w/w1/the-long-tide) rose",
+    );
+  });
+
+  it("rewrites multiple links and leaves surrounding text untouched", () => {
+    expect(linkifyWikilinks("[[A]] and [[B]]!", "w9")).toBe(
+      "[A](/w/w9/a) and [B](/w/w9/b)!",
+    );
   });
 });
