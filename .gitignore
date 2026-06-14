@@ -34,6 +34,10 @@ coverage/
 *.sqlite3
 .cache/
 
+# typescript / next.js generated
+*.tsbuildinfo
+next-env.d.ts
+
 # internal planning / handoff docs — NEVER commit to the public repo
 # (Chinese internal notes + Sablekit burner-identity strategy; keep local only).
 # The public doc is the English README. Publish a sanitized spec only if you choose.
