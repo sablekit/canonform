@@ -9,7 +9,10 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import * as schema from "./schema";
 
-let database: ReturnType<typeof drizzle<typeof schema>> | undefined;
+/** The Drizzle database type (postgres.js driver), shared by the repo layer. */
+export type Database = ReturnType<typeof drizzle<typeof schema>>;
+
+let database: Database | undefined;
 
 export function getDb() {
   if (!database) {
