@@ -4,19 +4,21 @@
 [![CI](https://github.com/sablekit/canonform/actions/workflows/ci.yml/badge.svg)](https://github.com/sablekit/canonform/actions/workflows/ci.yml)
 [![GitHub stars](https://img.shields.io/github/stars/sablekit/canonform?style=social)](https://github.com/sablekit/canonform/stargazers)
 
-**Seed a fictional world in one sentence — get your own browsable, self-generating,
-internally-consistent wiki for it.**
+**Seed a fictional world in one sentence. Get your own wiki that writes itself — and
+remembers what it wrote.**
 
-Type *"a desert empire that worships its own shadow"* and Canonform pre-generates a
-handful of interlinked encyclopedia articles. Click any blue `[[link]]` and the next
-article writes itself, live, token by token — then it's cached as canon forever.
+Type one line — *"a drowned city where memories are traded as currency"* — and Canonform
+generates a small encyclopedia for that world. Click any blue `[[link]]` and the next
+article writes itself, live, then it's canon forever. Keep clicking; the world keeps
+growing and stays consistent with itself.
 
-> **Your world, not one shared hallucination.** Other self-writing wikis grow a single
-> shared world that everyone edits. In Canonform, *each person seeds their own*
-> persistent, consistent, shareable universe. Infinite wikis, plural.
+> **Your world, not one shared hallucination.** Other "infinite wiki" projects grow
+> *one* shared hallucinated encyclopedia that everyone pokes at. Canonform gives **each
+> person their own** persistent world — yours to seed, explore, and share. The hard part
+> isn't generating text; it's keeping a small, invented world from contradicting itself.
+> That's what Canonform is built around — see [how it stays consistent](#how-it-works).
 
-> 🚧 **Status: early development.** v0.1 is being built in the open. Star the repo to
-> follow along; expect rough edges until the first release.
+> 🚧 **Early development — play-first and free.**
 
 ## How it works
 
