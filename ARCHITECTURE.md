@@ -70,7 +70,7 @@ revisit only if a concrete need outgrows the above.
 | Area | Path | Notes |
 |---|---|---|
 | Seed / world create | [`src/lib/generation/`](src/lib/generation/) | world setup + starter-pack pre-generation |
-| Article page (SSR + stream) | `TODO` | the core loop (route) |
+| Article page (SSR + stream) | [`src/app/w/[worldId]/[slug]/`](src/app/w/) · [`actions.ts`](src/app/actions.ts) | cache hit → SSR; miss → SSE stream route; seed server action |
 | Generation loop | [`src/lib/generation/`](src/lib/generation/) | build → stream → parse `[[links]]` → atomic write (page + edges) |
 | Prompt build + LLM client | [`src/lib/llm/`](src/lib/llm/) | the moat — L2/L3 prompt builder + OpenRouter streaming client |
 | Data model + DB client | [`src/db/`](src/db/) | L1 store (`pages`) + L2 graph (`links`); migrations in `drizzle/` |

@@ -10,7 +10,7 @@ export interface LlmConfig {
 
 // Cheap model by default (SPEC §4: the wow comes from skin + streaming + consistency,
 // not model tier). Override per-world or globally with CANONFORM_MODEL.
-const DEFAULT_MODEL = "google/gemini-2.0-flash-001";
+const DEFAULT_MODEL = "google/gemini-2.5-flash";
 const DEFAULT_BASE_URL = "https://openrouter.ai/api/v1";
 
 export function getLlmConfig(): LlmConfig {
